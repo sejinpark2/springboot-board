@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>게시판</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            width: 60%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        form {
+            border: 1px solid #e8e8e8;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        input[type=text], textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0 22px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+        input[type=submit] {
+            background-color: #707070;
+            color: white;
+            padding: 14px 20px;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+        }
+        input[type=submit]:hover {
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+<h1>게시글 등록</h1>
+<form action="/board/save" method="post" enctype="multipart/form-data">
+    <b>제목</b>
+    <input type="text" name="Title" required><br>
+
+    <b>내용</b>
+    <textarea name="Contents" cols="30" rows="10" required></textarea><br>
+
+    <b>파일</b>
+    <input type="file" name="files" multiple><br>
+
+    <input type="submit" value="글작성">
+</form>
+</body>
+</html>
