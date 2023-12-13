@@ -33,7 +33,7 @@
 ### 📦DB 설계
 
 ---
-![image](https://github.com/sejinpark2/springboot-board/assets/141610055/7689295c-7feb-4098-83e9-119cbc685692)
+![image](https://github.com/sejinpark2/springboot-board/assets/141610055/90729154-f5ea-4ae0-b38d-2a936abfe922)
 
 
 <br><br>
