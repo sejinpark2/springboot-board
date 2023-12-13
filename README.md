@@ -87,7 +87,7 @@
 
 6. 게시글 삭제 <br>
   \- 상세화면에서 삭제 버튼 클릭
-![image](https://github.com/sejinpark2/Board/assets/141610055/14317a6b-75c1-4fa2-ae34-1b59cdc2cd9b)
+![image](https://github.com/sejinpark2/springboot-board/assets/141610055/0cee88f3-535b-45cb-832b-9130d4d4a331)
 
 
 7. 첨부 파일 다운로드 <br>
@@ -99,19 +99,21 @@
 
 ### 댓글
 1. 댓글 작성
-![image](https://github.com/sejinpark2/Board/assets/141610055/fcbf9214-2adf-42bb-b7aa-e4b86eb27405)
+![image](https://github.com/sejinpark2/springboot-board/assets/141610055/eb1125aa-3eda-4d79-b888-ddfb48d02c8d)
+
 
 
 2. 댓글 수정 <br>
   \- 댓글 옆 수정 버튼 클릭 
-![image](https://github.com/sejinpark2/Board/assets/141610055/830608f6-dd5b-4a9c-b5c2-04021d1f747d)
-![image](https://github.com/sejinpark2/Board/assets/141610055/6b34f70f-fa3c-4df3-bb9b-b78446d19a35)
+![image](https://github.com/sejinpark2/springboot-board/assets/141610055/5d038c07-04ab-475a-be6e-47ccaba11a1e)
+![image](https://github.com/sejinpark2/springboot-board/assets/141610055/84088be5-1d5b-46ac-b509-89a618d2bff9)
 
 
 4. 댓글 삭제 <br>
   \- 댓글 옆 삭제 버튼 클릭
-![image](https://github.com/sejinpark2/Board/assets/141610055/4d1bc7ff-b567-4c0e-b43e-8322bd2e4ab0)
-![image](https://github.com/sejinpark2/Board/assets/141610055/47fb2df8-74f2-4f24-90eb-4e14bd313e50)
+![image](https://github.com/sejinpark2/springboot-board/assets/141610055/6cbfedeb-4851-4386-b8b3-8fe31c69190c)
+![image](https://github.com/sejinpark2/springboot-board/assets/141610055/33ffc1c9-51d2-4782-95d9-2189711edcc5)
+
 
 <br>
 
