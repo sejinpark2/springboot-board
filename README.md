@@ -33,9 +33,7 @@
 ### 📦DB 설계
 
 ---
-![image](https://github.com/sejinpark2/Board/assets/141610055/7689295c-7feb-4098-83e9-119cbc685692)
-
-
+![image](https://github.com/sejinpark2/springboot-board/assets/141610055/7689295c-7feb-4098-83e9-119cbc685692)
 
 
 <br><br>
@@ -66,33 +64,35 @@
 ### 게시글 
 1. 게시글 작성 <br>
   \- 텍스트와 파일 첨부
-![image](https://github.com/sejinpark2/Board/assets/141610055/dab7a9e5-f4aa-406f-bb83-8c1b5517f5f7)
+![image](https://github.com/sejinpark2/springboot-board/assets/141610055/dab7a9e5-f4aa-406f-bb83-8c1b5517f5f7)
+![image](https://github.com/sejinpark2/springboot-board/assets/141610055/4c6ac640-908b-407d-bd75-8825f863bd37)
 
 
 
-2. 게시글 목록 <br>
+
+3. 게시글 목록 <br>
   \- 업로드된 게시글들을 확인할 수 있음
   \- 한 페이지에 게시글5개, 최대 3페이지
-![image](https://github.com/sejinpark2/Board/assets/141610055/d4885570-4837-48ce-805f-689a909e18a9)
+![image](https://github.com/sejinpark2/springboot-board/assets/141610055/d4885570-4837-48ce-805f-689a909e18a9)
 
 
-3. 게시글 조회 <br>
+4. 게시글 조회 <br>
   \- 작성된 게시글의 제목,내용,파일,댓글 확인이 가능
   \- 첨부된 파일은 다운로드 가능
-![image](https://github.com/sejinpark2/Board/assets/141610055/208a5279-3c31-4c40-b74f-41f0ee60d9b9)
+![image](https://github.com/sejinpark2/springboot-board/assets/141610055/208a5279-3c31-4c40-b74f-41f0ee60d9b9)
 
-4. 게시글 수정 <br>
+5. 게시글 수정 <br>
   \- 상세화면에서 수정 버튼 클릭 <br>
   \- 새로운 작성 칸이 나오고 입력한 내용으로 수정
-![image](https://github.com/sejinpark2/Board/assets/141610055/22efdfac-6282-4cb1-9b64-5ac9847960c6)
+![image](https://github.com/sejinpark2/springboot-board/assets/141610055/22efdfac-6282-4cb1-9b64-5ac9847960c6)
 
 
-5. 게시글 삭제 <br>
+6. 게시글 삭제 <br>
   \- 상세화면에서 삭제 버튼 클릭
 ![image](https://github.com/sejinpark2/Board/assets/141610055/14317a6b-75c1-4fa2-ae34-1b59cdc2cd9b)
 
 
-6. 첨부 파일 다운로드 <br>
+7. 첨부 파일 다운로드 <br>
   \- 상세화면에서 첨부 파일 옆 다운로드 버튼 클릭
 ![image](https://github.com/sejinpark2/Board/assets/141610055/229970e7-637b-4530-815f-436e9d01bb56)
 
