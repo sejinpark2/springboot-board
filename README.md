@@ -65,7 +65,8 @@
 1. 게시글 작성 <br>
   \- 텍스트와 파일 첨부
 ![image](https://github.com/sejinpark2/springboot-board/assets/141610055/dab7a9e5-f4aa-406f-bb83-8c1b5517f5f7)
-![image](https://github.com/sejinpark2/springboot-board/assets/141610055/4c6ac640-908b-407d-bd75-8825f863bd37)
+
+![image](https://github.com/sejinpark2/springboot-board/assets/141610055/f8edbcbd-38aa-4d48-8d79-6dba5778efc9)
 
 
 
