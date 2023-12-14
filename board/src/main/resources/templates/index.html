@@ -61,6 +61,8 @@
     <div class="header-buttons">
         <button onclick="create()" style="width: auto;">글쓰기</button>
         <button onclick="paging()" style="width: auto;">목록</button>
+        <button onclick="goToJoin()" style="width: auto;">회원가입</button>
+        <button onclick="goToLogin()" style="width: auto;">로그인</button>
     </div>
 </header>
 
@@ -79,6 +81,16 @@
     const paging = () => {
          location.href = "/board/paging";
     }
+
+    const goToJoin = () => {
+         location.href = "/join.html"; // 로그인 버튼 클릭 시 "join.html"로 이동
+    }
+
+    const goToLogin = () => {
+         location.href = "/login.html"; // 로그인 버튼 클릭 시 "login.html"로 이동
+    }
 </script>
 </body>
 </html>
+
+
