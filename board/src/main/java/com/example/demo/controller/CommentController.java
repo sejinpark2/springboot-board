@@ -34,19 +34,19 @@ public class CommentController {
         }
     }
 
-    @GetMapping("/list/{boardId}")
+    @GetMapping("/list/{Id}")
     public ResponseEntity<List<CommentDTO>> list(@PathVariable Long boardId) {
         List<CommentDTO> comments = commentService.findAll(boardId);
         return new ResponseEntity<>(comments, HttpStatus.OK);
     }
 
-    @PostMapping("/update/{commentId}")
+    @PostMapping("/update/{Id}")
     public String commentUpdate(@ModelAttribute CommentDTO commentDTO) {
         commentService.update(commentDTO.getId(), commentDTO);
         return "redirect:/board/paging";
     }
 
-    @PostMapping("/delete/{commentId}")
+    @PostMapping("/delete/{Id}")
     public String deleteComment(@PathVariable Long commentId) {
         commentService.delete(commentId);
         return "redirect:/board/paging";

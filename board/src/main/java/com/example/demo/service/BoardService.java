@@ -1,11 +1,14 @@
 package com.example.demo.service;
 
+import com.auth0.jwt.interfaces.DecodedJWT;
+import com.example.demo.core.security.JwtTokenProvider;
 import com.example.demo.entity.BoardFile;
 import com.example.demo.repository.BoardRepository;
 import com.example.demo.DTO.BoardDTO;
 import com.example.demo.entity.Board;
 
 import com.example.demo.repository.FileRepository;
+import com.example.demo.user.User;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 import lombok.RequiredArgsConstructor;
@@ -14,12 +17,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -35,50 +38,52 @@ public class BoardService {
     String filePath = "C:/Users/G/Desktop/green/Board Files/";
 
     @Transactional
-    public void save(BoardDTO dto, MultipartFile[] files) throws IOException {
+    public void save(BoardDTO dto, MultipartFile[] files, String jwtToken) throws IOException {
 
-        Path uploadPath = Paths.get(filePath);
+        DecodedJWT decodedJWT = JwtTokenProvider.verify(jwtToken);
 
-        // ** 만약 경로가 없다면... 경로 생성.
-        if (!Files.exists(uploadPath)) {
-            Files.createDirectories(uploadPath);
-        }
+        String userId = decodedJWT.getClaim("id").asString();
+        dto.setId(userId);
 
-        // ** 게시글 DB에 저장 후 pk을 받아옴.
+        // ** 게시글 DB에 저장 후 pk을 받아옵니다.
         Long id = boardRepository.save(dto.toEntity()).getId();
         Board board = boardRepository.findById(id).get();
 
-        if (files != null && files.length > 0) {
-            // ** 파일 정보 저장.
+        // 추
+        if (!files[0].isEmpty()) {
+            Path uploadPath = Paths.get(filePath);
+
+            // 만약 경로가 없다면... 경로 생성
+            if (!Files.exists(uploadPath)) {
+                Files.createDirectories(uploadPath);
+            }
             for (MultipartFile file : files) {
-                if (!file.isEmpty()) {
-                    // ** 파일명 추출
-                    String originalFileName = file.getOriginalFilename();
+                // 파일명 추출
+                String originalFilename = file.getOriginalFilename();
 
-                    // ** 확장자 추출
-                    String formatType = originalFileName.substring(originalFileName.lastIndexOf("."));
+                // 확장자 추출
+                String formatType = originalFilename.substring(
+                        originalFilename.lastIndexOf("."));
 
-                    // ** UUID 생성
-                    String uuid = UUID.randomUUID().toString();
+                // UUID 생성
+                String uuid = UUID.randomUUID().toString();
 
-                    // ** 경로 지정
-                    // ** C:/Users/G/Desktop/green/Board Files/{uuid + originalFileName}
-                    String path = filePath + uuid + originalFileName;
+                // 경로 지정
+                String path = filePath + uuid + originalFilename;
 
-                    // ** 경로에 파일을 저장.  DB 아님
-                    file.transferTo(new File(path));
+                // 파일을 물리적으로 저장 (DB에 저장 X)
+                file.transferTo(new File(path));
 
-                    BoardFile boardFile = BoardFile.builder()
-                            .filePath(filePath)
-                            .fileName(originalFileName)
-                            .uuid(uuid)
-                            .fileType(formatType)
-                            .fileSize(file.getSize())
-                            .board(board)
-                            .build();
+                BoardFile boardFile = BoardFile.builder()
+                        .filePath(filePath)
+                        .fileName(originalFilename)
+                        .uuid(uuid)
+                        .fileType(formatType)
+                        .fileSize(file.getSize())
+                        .board(board)
+                        .build();
 
-                    fileRepository.save(boardFile);
-                }
+                fileRepository.save(boardFile);
             }
         }
     }

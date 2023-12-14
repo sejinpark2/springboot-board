@@ -29,10 +29,6 @@ public class Board {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // ** 작성자 이름
-    @Column(length = 50)
-    private String userName;
-
     // ** 게시물 제목
     @Column(length = 50)
     private String title;
@@ -59,9 +55,8 @@ public class Board {
     private List<BoardFile> files = new ArrayList<>();
 
     @Builder
-    public Board(Long id, String userName, String title, String contents, LocalDateTime createTime, LocalDateTime updateTime) {
+    public Board(Long id, String title, String contents, LocalDateTime createTime, LocalDateTime updateTime) {
         this.id = id;
-        this.userName = userName;
         this.title = title;
         this.contents = contents;
         this.createTime = createTime;
