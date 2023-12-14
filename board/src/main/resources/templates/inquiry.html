@@ -1,0 +1,115 @@
+<html xmlns:th="http://www.thymleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.w3.org/1999/xhtml" lang="ko">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Inquire board</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
+    <link
+            rel="stylesheet"
+            href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+            integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+            crossorigin="anonymous"
+    />
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.js" integrity="sha256-DrT5NfxfbHvMHux31Lkhxg42LY6of8TaYyK50jnxRnM=" crossorigin="anonymous"></script>
+    <script defer src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script defer src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@500&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@600&display=swap" rel="stylesheet" />
+
+    <link rel="stylesheet" th:href="@{/static/css/soriel_manageStudent.css}" />
+    <link rel="stylesheet" th:href="@{/static/css/soriel_Header.css}" />
+</head>
+<body>
+<div class="container">
+    <th:block th:replace="fragment/soriel_Header :: headerFragment"></th:block>
+
+    <div id="inq" class="text-center">
+        <p class="h4">문의게시판</p>
+        <p class="h2">ㅡ</p>
+    </div>
+    <!-- Inquire Text 1 -->
+
+    <ul class="nav nav-pills justify-content-end" style="margin-bottom: 5px">
+        <li class="nav-item">
+            <a sec:authorize="isAuthenticated()" class="nav-link active" href="../inquire_form">글쓰기</a>
+        </li>
+    </ul>
+    <table class="table">
+        <thead>
+        <tr style="text-align: center;">
+            <th scope="col">#</th>
+            <th id="title" scope="col">제목</th>
+            <th scope="col">작성자</th>
+            <th scope="col">카테고리</th>
+            <th scope="col">날짜</th>
+            <th scope="col">답변여부</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr style="text-align: center;" th:each="board : ${postList.content}">
+            <th scope="row">
+                <span th:text="${board.id}"></span>
+            </th>
+            <td id="title_rl">
+                <a th:href="@{'/inquire_view/'+${board.id}}">
+                    <span th:text="${board.title}"></span>
+                </a>
+            </td>
+            <td>
+                <span th:text="${board.writer}"></span>
+            </td>
+            <td>
+                <span th:text="${board.category}"></span>
+            </td>
+            <td>
+                <span th:text="${#temporals.format(board.createdDate, 'yyyy-MM-dd HH:mm')}"></span>
+            </td>
+            <td>
+                <span th:text="${board.verify_reply}"></span>
+            </td>
+        </tr>
+
+        </tbody>
+    </table>
+
+    <nav id="pag" style="text-align: center;">
+        <ul class="pagination justify-content-center"
+            th:with="start=${T(Math).floor(postList.number/10)*10 + 1},
+                    last=(${start + 9 < postList.totalPages ? start + 9 : postList.totalPages})">
+            <li class="page-item">
+                <a class="page-link" th:href="@{/inquire_board(page=1)}" aria-label="First">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+
+            <li class="page-item" th:class="${postList.first} ? 'disabled'">
+                <a class="page-link" th:href="${postList.first} ? '#' :@{/inquire_board(page=${postList.number})}" aria-label="Previous">
+                    <span aria-hidden="true">&lt;</span>
+                </a>
+            </li>
+
+            <li class="page-item" th:each="page: ${#numbers.sequence(start, last)}" th:class="${page == postList.number + 1} ? 'active'">
+                <a class="page-link" th:text="${page}" th:href="@{/inquire_board(page=${page})}"></a>
+            </li>
+
+            <li class="page-item" th:class="${postList.last} ? 'disabled'">
+                <a class="page-link" th:href="${postList.last} ? '#' : @{/inquire_board(page=${postList.number + 2})}" aria-label="Next">
+                    <span aria-hidden="true">&gt;</span>
+                </a>
+            </li>
+
+            <li class="page-item">
+                <a class="page-link" th:href="@{/inquire_board(page=${postList.totalPages})}" aria-label="Last">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+</div>
+<th:block th:replace="fragment/soriel_Footer :: footerFragment"></th:block>
+</body>
+</html>
