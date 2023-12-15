@@ -1,6 +1,7 @@
 package com.example.demo.entity;
 
 import com.example.demo.DTO.BoardDTO;
+import com.example.demo.user.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,6 +30,9 @@ public class Board {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(length = 50)
+    private String writer;
+
     // ** 게시물 제목
     @Column(length = 50)
     private String title;
@@ -55,8 +59,9 @@ public class Board {
     private List<BoardFile> files = new ArrayList<>();
 
     @Builder
-    public Board(Long id, String title, String contents, LocalDateTime createTime, LocalDateTime updateTime) {
+    public Board(Long id, String writer, String title, String contents, LocalDateTime createTime, LocalDateTime updateTime) {
         this.id = id;
+        this.writer = writer;
         this.title = title;
         this.contents = contents;
         this.createTime = createTime;
@@ -65,12 +70,10 @@ public class Board {
 
     public void updateFromDTO(BoardDTO boardDTO){
 
-        // ** 모든 변경 사항을 세팅
         this.title = boardDTO.getTitle();
         this.contents = boardDTO.getContents();
         this.updateTime = boardDTO.getUpdateTime();
     }
-
 }
 
 

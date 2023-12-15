@@ -19,7 +19,6 @@ public class KakaoRequest {
                     .email(email)
                     .username(username)
                     .roles(Collections.singletonList("ROLE_USER"))
-                    .isKakaoUser(true)
                     .build();
         }
     }
@@ -32,7 +31,6 @@ public class KakaoRequest {
         public User toEntity() {
             return User.builder()
                     .email(email)
-                    .isKakaoUser(true)
                     .build();
         }
     }

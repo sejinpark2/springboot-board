@@ -13,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
 
 
@@ -22,7 +23,7 @@ import java.util.Optional;
 public class UserService {
     private final AuthenticationManager authenticationManager;
     private final PasswordEncoder passwordEncoder;
-    private final com.example.demo.user.UserRepository userRepository;
+    private final UserRepository userRepository;
 
     @Transactional
     public void join(UserRequest.JoinDTO requestDTO) {

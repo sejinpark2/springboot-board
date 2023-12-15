@@ -15,14 +15,17 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -34,20 +37,17 @@ public class BoardService {
 
     private final BoardRepository boardRepository;
     private final FileRepository fileRepository;
+    private final JwtTokenProvider jwtTokenProvider;
 
     String filePath = "C:/Users/G/Desktop/green/Board Files/";
 
     @Transactional
-    public void save(BoardDTO dto, MultipartFile[] files, String jwtToken) throws IOException {
-
-        DecodedJWT decodedJWT = JwtTokenProvider.verify(jwtToken);
-
-        String userId = decodedJWT.getClaim("id").asString();
-        dto.setId(userId);
+    public void save(BoardDTO dto, MultipartFile[] files) throws IOException {
 
         // ** 게시글 DB에 저장 후 pk을 받아옵니다.
         Long id = boardRepository.save(dto.toEntity()).getId();
         Board board = boardRepository.findById(id).get();
+
 
         // 추
         if (!files[0].isEmpty()) {
@@ -103,6 +103,7 @@ public class BoardService {
         Page<Board> boards = boardRepository.findAll(PageRequest.of(page, size));
         return boards.map(board -> new BoardDTO(
                 board.getId(),
+                board.getWriter(),
                 board.getTitle(),
                 board.getContents(),
                 board.getCreateTime(),

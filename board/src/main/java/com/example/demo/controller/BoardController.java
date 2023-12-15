@@ -23,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -93,8 +94,8 @@ public class BoardController {
 
     @PostMapping("/save")
     public String save(@ModelAttribute BoardDTO boardDTO,
-                       @RequestParam MultipartFile[] files
-                     ) throws IOException {
+                       @RequestParam MultipartFile[] files) throws IOException {
+
 
         boardDTO.setCreateTime(LocalDateTime.now());
         boardService.save(boardDTO, files);

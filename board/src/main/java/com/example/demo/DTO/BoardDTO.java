@@ -14,6 +14,8 @@ public class BoardDTO {
 
     private Long id;
 
+    private String writer;
+
     private String title;
 
     private String contents;
@@ -24,6 +26,7 @@ public class BoardDTO {
 
     public Board toEntity(){
         return Board.builder()
+                .writer(writer)
                 .title(title)
                 .contents(contents)
                 .createTime(createTime)
@@ -34,6 +37,7 @@ public class BoardDTO {
     public static BoardDTO toBoardDTO(Board board) {
         return new BoardDTO(
                 board.getId(),
+                board.getWriter(),
                 board.getTitle(),
                 board.getContents(),
                 board.getCreateTime(),
