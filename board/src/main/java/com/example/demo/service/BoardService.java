@@ -1,7 +1,5 @@
 package com.example.demo.service;
 
-import com.auth0.jwt.interfaces.DecodedJWT;
-import com.example.demo.core.security.JwtTokenProvider;
 import com.example.demo.entity.BoardFile;
 import com.example.demo.repository.BoardRepository;
 import com.example.demo.DTO.BoardDTO;
@@ -37,7 +35,6 @@ public class BoardService {
 
     private final BoardRepository boardRepository;
     private final FileRepository fileRepository;
-    private final JwtTokenProvider jwtTokenProvider;
 
     String filePath = "C:/Users/G/Desktop/green/Board Files/";
 
