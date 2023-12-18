@@ -9,6 +9,7 @@ import com.example.demo.repository.FileRepository;
 import com.example.demo.service.BoardService;
 import com.example.demo.DTO.BoardDTO;
 
+import com.example.demo.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -94,11 +95,13 @@ public class BoardController {
 
     @PostMapping("/save")
     public String save(@ModelAttribute BoardDTO boardDTO,
-                       @RequestParam MultipartFile[] files) throws IOException {
+                       @RequestParam MultipartFile[] files,
+                       @AuthenticationPrincipal User principal) throws IOException {
+
 
 
         boardDTO.setCreateTime(LocalDateTime.now());
-        boardService.save(boardDTO, files);
+        boardService.save(boardDTO, files, principal);
 
         return "redirect:/board/";
     }

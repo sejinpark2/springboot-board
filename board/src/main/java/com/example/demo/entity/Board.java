@@ -58,6 +58,9 @@ public class Board {
     @OneToMany(mappedBy = "board", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<BoardFile> files = new ArrayList<>();
 
+    @ManyToOne
+    private User user;
+
     @Builder
     public Board(Long id, String writer, String title, String contents, LocalDateTime createTime, LocalDateTime updateTime) {
         this.id = id;
@@ -66,6 +69,11 @@ public class Board {
         this.contents = contents;
         this.createTime = createTime;
         this.updateTime = updateTime;
+    }
+
+    public Board(BoardDTO dto, User user){
+        this.title = dto.getTitle();
+        this.user = user;
     }
 
     public void updateFromDTO(BoardDTO boardDTO){

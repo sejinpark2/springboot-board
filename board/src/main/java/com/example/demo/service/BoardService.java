@@ -7,6 +7,7 @@ import com.example.demo.entity.Board;
 
 import com.example.demo.repository.FileRepository;
 import com.example.demo.user.User;
+import com.example.demo.user.UserRepository;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 import lombok.RequiredArgsConstructor;
@@ -35,11 +36,19 @@ public class BoardService {
 
     private final BoardRepository boardRepository;
     private final FileRepository fileRepository;
+    private final UserRepository userRepository;
 
     String filePath = "C:/Users/G/Desktop/green/Board Files/";
 
     @Transactional
-    public void save(BoardDTO dto, MultipartFile[] files) throws IOException {
+    public void save(BoardDTO dto, MultipartFile[] files, User principal) throws IOException {
+
+        User user = userRepository.findByUsername(principal.getUsername()).orElseThrow(
+                () -> new IllegalArgumentException("There is nobody by that name.")
+        );
+
+        Board board2 = new Board(dto,user);
+        boardRepository.save(board2);
 
         // ** 게시글 DB에 저장 후 pk을 받아옵니다.
         Long id = boardRepository.save(dto.toEntity()).getId();

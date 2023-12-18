@@ -6,6 +6,9 @@ import com.example.demo.core.error.exception.Exception500;
 import com.example.demo.core.security.CustomUserDetails;
 import com.example.demo.core.security.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -14,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
 
@@ -41,7 +45,6 @@ public class UserService {
         }
     }
 
-    @Transactional
     public String login(UserRequest.JoinDTO requestDTO) {
         // ** 인증 작업.
         try {
@@ -56,7 +59,13 @@ public class UserService {
             CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
 
             // ** 토큰 발급.
-            return JwtTokenProvider.create(customUserDetails.getUser());
+            String jwt = JwtTokenProvider.create(customUserDetails.getUser());
+
+            // ** tokwn을 header에도 넣고
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.add(JwtTokenProvider.HEADER, "Bearer " + jwt);
+
+            return String.valueOf(new ResponseEntity<>(jwt, httpHeaders, HttpStatus.OK));
 
         } catch (Exception e) {
             // 401 반환.

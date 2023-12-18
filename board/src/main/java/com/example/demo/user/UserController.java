@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @RequiredArgsConstructor
@@ -29,12 +30,10 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody @Valid UserRequest.JoinDTO requestDTO, Error error) {
+    public ResponseEntity<?> login(@RequestBody @Valid UserRequest.JoinDTO requestDTO, Error error){
+        userService.login(requestDTO);
 
-        String jwt = userService.login(requestDTO);
-
-        return ResponseEntity.ok().header(JwtTokenProvider.HEADER, jwt)
-                .body(ApiUtils.success(null));
+        return ResponseEntity.ok(ApiUtils.success(null));
     }
 }
 
