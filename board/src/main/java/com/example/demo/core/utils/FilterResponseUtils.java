@@ -3,7 +3,6 @@ package com.example.demo.core.utils;
 import com.example.demo.core.error.exception.Exception401;
 import com.example.demo.core.error.exception.Exception403;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.cfg.CoercionInputShape;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;

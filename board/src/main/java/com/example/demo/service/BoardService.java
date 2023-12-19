@@ -1,15 +1,12 @@
 package com.example.demo.service;
 
-import com.example.demo.core.security.CustomUserDetails;
 import com.example.demo.entity.BoardFile;
 import com.example.demo.repository.BoardRepository;
 import com.example.demo.DTO.BoardDTO;
 import com.example.demo.entity.Board;
 
 import com.example.demo.repository.FileRepository;
-import com.example.demo.user.User;
 import com.example.demo.user.UserRepository;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 import lombok.RequiredArgsConstructor;

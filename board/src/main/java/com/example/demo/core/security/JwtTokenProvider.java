@@ -9,7 +9,6 @@
     import com.example.demo.user.StringArrayConverter;
     import com.example.demo.user.User;
 
-    import java.security.SignatureException;
     import java.util.Date;
 
     public class JwtTokenProvider {

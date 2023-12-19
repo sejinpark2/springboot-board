@@ -1,6 +1,5 @@
 package com.example.demo.controller;
 
-import org.apache.logging.log4j.message.ReusableMessage;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.ResponseEntity;

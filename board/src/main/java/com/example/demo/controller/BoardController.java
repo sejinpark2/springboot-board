@@ -1,30 +1,20 @@
 package com.example.demo.controller;
 
-import com.example.demo.core.security.CustomUserDetails;
-import com.example.demo.core.security.JwtAuthenticationFilter;
-import com.example.demo.entity.Board;
+
 import com.example.demo.entity.BoardFile;
-import com.example.demo.repository.BoardRepository;
 import com.example.demo.repository.FileRepository;
 import com.example.demo.service.BoardService;
 import com.example.demo.DTO.BoardDTO;
 
-import com.example.demo.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.List;
 
