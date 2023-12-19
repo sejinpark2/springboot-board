@@ -8,8 +8,6 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<User, Long> {
     // ** JPA는 메서드의 이름을 분석하는 방식으로 쿼리문을 작성할 수 있는 능력자
     Optional<User> findByEmail(String email);
-    Optional<User> findByUsername(String username);
-
 }
 
 

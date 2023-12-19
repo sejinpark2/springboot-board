@@ -1,11 +1,11 @@
 package com.example.demo.user;
 
 import com.example.demo.core.error.exception.Exception400;
+import com.example.demo.core.error.exception.Exception401;
 import com.example.demo.core.error.exception.Exception500;
 import com.example.demo.core.security.CustomUserDetails;
 import com.example.demo.core.security.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -43,7 +43,7 @@ public class UserService {
         }
     }
 
-    public ResponseEntity<String> login(UserRequest.JoinDTO requestDTO) {
+    public String login(UserRequest.JoinDTO requestDTO) {
         // ** 인증 작업.
         try {
             UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken
@@ -57,19 +57,12 @@ public class UserService {
             CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
 
             // ** 토큰 발급.
-            String jwt = JwtTokenProvider.create(customUserDetails.getUser());
-
-            // ** token을 header에도 넣고
-            HttpHeaders httpHeaders = new HttpHeaders();
-            httpHeaders.add("Authorization", "Bearer " + jwt);
-
-            return new ResponseEntity<>(jwt,httpHeaders,HttpStatus.OK);
-
-        } catch (AuthenticationException e) {
-            // 인증 실패 처리
-            return new ResponseEntity<>("Authentication failed", HttpStatus.UNAUTHORIZED);
+            return JwtTokenProvider.create(customUserDetails.getUser());
+        } catch (Exception e) {
+            throw new Exception401("인증 되지 않음.");
         }
     }
+
 
     public void checkEmail(String email) {
         // 동일한 이메일이 있는지 확인.

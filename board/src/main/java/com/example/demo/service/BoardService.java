@@ -30,7 +30,6 @@ public class BoardService {
 
     private final BoardRepository boardRepository;
     private final FileRepository fileRepository;
-    private final UserRepository userRepository;
 
     String filePath = "C:/Users/G/Desktop/green/Board Files/";
 

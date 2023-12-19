@@ -28,10 +28,7 @@ public class User{
     @Column(length = 256, nullable = true)
     private String password;
 
-    @Column(length = 45, nullable = false)
-    private String username;
-
-    @Column(length = 16, nullable = true)
+    @Column(length = 11)
     private String phoneNumber;
 
     @Column(length = 30)
@@ -41,11 +38,10 @@ public class User{
 
     // * 주로 생성자의 인자가 많거나, 인자를 선택적으로 지정 해야 하는 경우에 사용.
     @Builder
-    public User(Long id, String email, String password, String username, String phoneNumber, List<String> roles) {
+    public User(Long id, String email, String password, String phoneNumber, List<String> roles) {
         this.id = id;
         this.email = email;
         this.password = password;
-        this.username = username;
         this.phoneNumber = phoneNumber;
         this.roles = roles;
     }

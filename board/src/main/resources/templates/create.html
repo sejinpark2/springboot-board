@@ -35,10 +35,31 @@
             opacity: 0.8;
         }
     </style>
+    <script>
+        function submitForm() {
+            // JWT를 가져온다고 가정
+            var jwt = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0cHdsczIzNjdAZ21haWwuY29tIiwicm9sZXMiOiJST0xFX1VTRVIiLCJpZCI6MSwiZXhwIjoxNzAyOTgwMDk4fQ.4EeGnnHTRrSunPjwh8n3iHx_yxzvXgkRYICLmrQPsansTI_913SAOgs-gWySucA8p0EgSZUTSyXUQ6X3guQduQ
+";
+            // form 요소 가져오기
+            var form = document.getElementById("postForm");
+
+            // HTTP 요청 헤더에 JWT를 추가
+            form.addEventListener("submit", function(event) {
+                event.preventDefault();
+
+                var xhr = new XMLHttpRequest();
+                xhr.open(form.method, form.action);
+                xhr.setRequestHeader("Authorization", "Bearer " + jwt);
+
+                // HTTP 요청 전송
+                xhr.send(new FormData(form));
+            });
+        }
+    </script>
 </head>
 <body>
 <h1>게시글 등록</h1>
-<form action="/board/save" method="post" enctype="multipart/form-data">
+<form id="postForm" action="/board/save" method="post" enctype="multipart/form-data">
     <b>제목</b>
     <input type="text" name="Title" required><br>
 
@@ -48,8 +69,9 @@
     <b>파일</b>
     <input type="file" name="files" multiple><br>
 
-    <input type="submit" value="글작성">
+    <input type="submit" value="글작성" onclick="submitForm()">
 </form>
 </body>
 </html>
+
 
