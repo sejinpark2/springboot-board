@@ -95,13 +95,11 @@ public class BoardController {
 
     @PostMapping("/save")
     public String save(@ModelAttribute BoardDTO boardDTO,
-                       @RequestParam MultipartFile[] files,
-                       @AuthenticationPrincipal User principal) throws IOException {
-
+                       @RequestParam MultipartFile[] files) throws IOException {
 
 
         boardDTO.setCreateTime(LocalDateTime.now());
-        boardService.save(boardDTO, files, principal);
+        boardService.save(boardDTO, files);
 
         return "redirect:/board/";
     }

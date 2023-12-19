@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.core.security.CustomUserDetails;
 import com.example.demo.entity.BoardFile;
 import com.example.demo.repository.BoardRepository;
 import com.example.demo.DTO.BoardDTO;
@@ -8,23 +9,19 @@ import com.example.demo.entity.Board;
 import com.example.demo.repository.FileRepository;
 import com.example.demo.user.User;
 import com.example.demo.user.UserRepository;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -41,14 +38,7 @@ public class BoardService {
     String filePath = "C:/Users/G/Desktop/green/Board Files/";
 
     @Transactional
-    public void save(BoardDTO dto, MultipartFile[] files, User principal) throws IOException {
-
-        User user = userRepository.findByUsername(principal.getUsername()).orElseThrow(
-                () -> new IllegalArgumentException("There is nobody by that name.")
-        );
-
-        Board board2 = new Board(dto,user);
-        boardRepository.save(board2);
+    public void save(BoardDTO dto, MultipartFile[] files) throws IOException {
 
         // ** 게시글 DB에 저장 후 pk을 받아옵니다.
         Long id = boardRepository.save(dto.toEntity()).getId();

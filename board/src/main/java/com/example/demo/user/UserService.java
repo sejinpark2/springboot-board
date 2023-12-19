@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -45,7 +46,7 @@ public class UserService {
         }
     }
 
-    public String login(UserRequest.JoinDTO requestDTO) {
+    public ResponseEntity<String> login(UserRequest.JoinDTO requestDTO) {
         // ** 인증 작업.
         try {
             UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken
@@ -61,15 +62,15 @@ public class UserService {
             // ** 토큰 발급.
             String jwt = JwtTokenProvider.create(customUserDetails.getUser());
 
-            // ** tokwn을 header에도 넣고
+            // ** token을 header에도 넣고
             HttpHeaders httpHeaders = new HttpHeaders();
-            httpHeaders.add(JwtTokenProvider.HEADER, "Bearer " + jwt);
+            httpHeaders.add("Authorization", "Bearer " + jwt);
 
-            return String.valueOf(new ResponseEntity<>(jwt, httpHeaders, HttpStatus.OK));
+            return new ResponseEntity<>(jwt,httpHeaders,HttpStatus.OK);
 
-        } catch (Exception e) {
-            // 401 반환.
-            throw new Exception401("인증 되지 않음.");
+        } catch (AuthenticationException e) {
+            // 인증 실패 처리
+            return new ResponseEntity<>("Authentication failed", HttpStatus.UNAUTHORIZED);
         }
     }
 

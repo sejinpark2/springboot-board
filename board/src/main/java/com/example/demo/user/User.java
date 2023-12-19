@@ -50,13 +50,5 @@ public class User{
         this.phoneNumber = phoneNumber;
         this.roles = roles;
     }
-
-    public void output(){
-        System.out.println(id);
-        System.out.println(email);
-        System.out.println(password);
-        System.out.println(username);
-        System.out.println(phoneNumber);
-        System.out.println(roles);
-    }
 }
+

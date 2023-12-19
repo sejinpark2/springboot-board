@@ -97,7 +97,7 @@ public class SecurityConfig {
         http.authorizeRequests(
                 authorize -> authorize.antMatchers("/carts/**", "/options/**", "/orders/**").authenticated()
                         .antMatchers("/admin/**")
-                        .access("hasRole('ADMIN')")
+                        .access("hasRole('USER')")
                         .anyRequest().permitAll()
         );
 
