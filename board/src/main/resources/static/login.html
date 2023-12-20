@@ -33,7 +33,7 @@
                  const result = await response.json();
                  if (result.success) {
                      alert("로그인에 성공했습니다!");
-                     window.location.href = 'http://localhost:8080';
+                     window.location.href = 'http://localhost:8080/board/create';
                  } else {
                      alert("에러: " + result.error.message);
                  }

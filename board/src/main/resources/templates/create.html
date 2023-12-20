@@ -36,25 +36,37 @@
         }
     </style>
     <script>
-        function submitForm() {
-            // JWT를 가져온다고 가정
-            var jwt = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0cHdsczIzNjdAZ21haWwuY29tIiwicm9sZXMiOiJST0xFX1VTRVIiLCJpZCI6MSwiZXhwIjoxNzAyOTgwMDk4fQ.4EeGnnHTRrSunPjwh8n3iHx_yxzvXgkRYICLmrQPsansTI_913SAOgs-gWySucA8p0EgSZUTSyXUQ6X3guQduQ
-";
-            // form 요소 가져오기
-            var form = document.getElementById("postForm");
+        function extractJWTFromCookie() {
+  var cookie = document.cookie;
+  var jwt = null;
 
-            // HTTP 요청 헤더에 JWT를 추가
-            form.addEventListener("submit", function(event) {
-                event.preventDefault();
+  var cookieArray = cookie.split(';');
+  for (var i = 0; i < cookieArray.length; i++) {
+    var cookiePair = cookieArray[i].trim();
 
-                var xhr = new XMLHttpRequest();
-                xhr.open(form.method, form.action);
-                xhr.setRequestHeader("Authorization", "Bearer " + jwt);
+    if (cookiePair.indexOf('jwt=') === 0) {
+      jwt = cookiePair.substring(4);
+      break;
+    }
+  }
 
-                // HTTP 요청 전송
-                xhr.send(new FormData(form));
-            });
-        }
+  return jwt;
+}
+
+// JWT 추출 함수를 호출하여 JWT를 가져옵니다.
+var jwt = extractJWTFromCookie();
+
+// AJAX를 이용한 POST 요청 보내기
+var xhr = new XMLHttpRequest();
+xhr.open('POST', 'http://localhost:8080/board/create', true);
+xhr.setRequestHeader('Authorization', 'Bearer ' + jwt);
+xhr.onreadystatechange = function () {
+  if (xhr.readyState === 4 && xhr.status === 200) {
+    // 요청이 성공적으로 완료되었을 때의 동작을 여기에 작성합니다.
+    console.log(xhr.responseText);
+  }
+};
+xhr.send();
     </script>
 </head>
 <body>
@@ -73,5 +85,4 @@
 </form>
 </body>
 </html>
-
 
