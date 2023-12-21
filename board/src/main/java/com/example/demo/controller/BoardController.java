@@ -89,7 +89,6 @@ public class BoardController {
     public String save(@ModelAttribute BoardDTO boardDTO,
                        @RequestParam MultipartFile[] files) throws IOException {
 
-
         boardDTO.setCreateTime(LocalDateTime.now());
         boardService.save(boardDTO, files);
 

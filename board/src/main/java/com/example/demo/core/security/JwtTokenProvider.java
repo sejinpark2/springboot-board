@@ -50,6 +50,11 @@
         // **  JWT 토큰 문자열을 검증하고, 유효하다면 디코딩된 DecodedJWT 객체를 반환.
         public static DecodedJWT verify(String jwt) throws SignatureVerificationException, TokenExpiredException {
 
+            // "Bearer" 접두어 제거
+            if (jwt.startsWith(TOKEN_PREFIX)) {
+                jwt = jwt.substring(TOKEN_PREFIX.length()).trim();
+            }
+
             // ** 토큰 검증을 시작.
             DecodedJWT decodedJWT = JWT.require(Algorithm.HMAC512(SECRET))
                     .build()

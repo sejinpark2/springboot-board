@@ -41,9 +41,8 @@ public class UserController {
         String encodedJwt = URLEncoder.encode(jwt, StandardCharsets.UTF_8);
         Cookie cookie = new Cookie("jwt", encodedJwt);
         cookie.setPath("/"); // 쿠키의 유효 범위 설정
-        //cookie.setHttpOnly(true); // JavaScript에서 쿠키에 접근하지 못하도록 설정
+        cookie.setHttpOnly(true); // JavaScript에서 쿠키에 접근하지 못하도록 설정
         response.addCookie(cookie);
-        System.out.println(cookie.getValue());
 
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add("Authorization", "Bearer " + jwt);

@@ -32,14 +32,16 @@
                  });
                  const result = await response.json();
                  if (result.success) {
-                     alert("로그인에 성공했습니다!");
-                     window.location.href = 'http://localhost:8080/board/create';
-                 } else {
-                     alert("에러: " + result.error.message);
-                 }
-             } catch (error) {
-                 console.error('에러:', error);
-             }
+                        alert("로그인에 성공했습니다!");
+                        console.log(location.href);
+                        location.href = '/';
+                    } else {
+                        console.log(result);
+                        alert("아이디 또는 비밀번호를 잘못 입력했습니다.\n입력하신 내용을 다시 확인해주세요.");
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                }
          };
          document.getElementById('loginSubmitButton').addEventListener('click', submitLoginForm);
     });

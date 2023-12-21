@@ -37,36 +37,45 @@
     </style>
     <script>
         function extractJWTFromCookie() {
-  var cookie = document.cookie;
-  var jwt = null;
+            var cookie = document.cookie;
+            var jwt = null;
 
-  var cookieArray = cookie.split(';');
-  for (var i = 0; i < cookieArray.length; i++) {
-    var cookiePair = cookieArray[i].trim();
+            var cookieArray = cookie.split(';');
+            for (var i = 0; i < cookieArray.length; i++) {
+                var cookiePair = cookieArray[i].trim();
 
-    if (cookiePair.indexOf('jwt=') === 0) {
-      jwt = cookiePair.substring(4);
-      break;
-    }
-  }
+                if (cookiePair.indexOf('jwt=') === 0) {
+                    jwt = cookiePair.substring(4);
+                    break;
+                }
+            }
+            console.log('JWT from cookie: ', jwt);
+            return jwt;
+        }
 
-  return jwt;
-}
+        function submitForm(event) {
+            event.preventDefault();  // 추가된 코드
 
-// JWT 추출 함수를 호출하여 JWT를 가져옵니다.
-var jwt = extractJWTFromCookie();
+            // JWT 추출 함수를 호출하여 JWT를 가져옵니다.
+            var jwt = extractJWTFromCookie();
 
-// AJAX를 이용한 POST 요청 보내기
-var xhr = new XMLHttpRequest();
-xhr.open('POST', 'http://localhost:8080/board/create', true);
-xhr.setRequestHeader('Authorization', 'Bearer ' + jwt);
-xhr.onreadystatechange = function () {
-  if (xhr.readyState === 4 && xhr.status === 200) {
-    // 요청이 성공적으로 완료되었을 때의 동작을 여기에 작성합니다.
-    console.log(xhr.responseText);
-  }
-};
-xhr.send();
+            // 폼 데이터 추출
+            var form = document.getElementById('postForm');
+            var formData = new FormData(form);
+
+            // AJAX를 이용한 POST 요청 보내기
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', 'http://localhost:8080/board/save', true);
+            xhr.setRequestHeader('Authorization', 'Bearer ' + jwt);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    // 요청이 성공적으로 완료되었을 때의 동작을 여기에 작성합니다.
+                    console.log(xhr.responseText);
+                }
+            };
+            // 폼 데이터와 함께 요청 보내기
+            xhr.send(formData);
+        }
     </script>
 </head>
 <body>
@@ -81,7 +90,7 @@ xhr.send();
     <b>파일</b>
     <input type="file" name="files" multiple><br>
 
-    <input type="submit" value="글작성" onclick="submitForm()">
+    <input type="submit" value="글작성" onclick="submitForm(event)">
 </form>
 </body>
 </html>
