@@ -84,7 +84,6 @@ public class BoardController {
         return "detail";
     }
 
-    @PreAuthorize("hasRole('USER')")
     @PostMapping("/save")
     public String save(@ModelAttribute BoardDTO boardDTO,
                        @RequestParam MultipartFile[] files) throws IOException {
