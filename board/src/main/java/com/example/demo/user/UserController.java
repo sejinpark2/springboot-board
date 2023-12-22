@@ -1,5 +1,6 @@
 package com.example.demo.user;
 
+import com.example.demo.core.security.JwtTokenProvider;
 import com.example.demo.core.utils.ApiUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -36,19 +37,22 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody @Valid UserRequest.JoinDTO requestDTO, Error error, HttpServletResponse response) {
         String jwt = userService.login(requestDTO);
+        System.out.println(jwt);
+
+        // JWT 토큰에서 "Bearer " 제거
+        if (jwt.startsWith("Bearer ")) {
+            jwt = jwt.substring(7);
+        }
 
         // JWT를 쿠키에 저장
-        String encodedJwt = URLEncoder.encode(jwt, StandardCharsets.UTF_8);
-        Cookie cookie = new Cookie("jwt", encodedJwt);
+        Cookie cookie = new Cookie("jwt", jwt);
         cookie.setPath("/"); // 쿠키의 유효 범위 설정
-        cookie.setHttpOnly(true); // JavaScript에서 쿠키에 접근하지 못하도록 설정
+        // cookie.setHttpOnly(true); // JavaScript에서 쿠키에 접근하지 못하도록 설정
         response.addCookie(cookie);
 
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add("Authorization", "Bearer " + jwt);
 
-        // ResponseBody에도 JWT를 포함하여 반환하거나 필요한 응답을 진행합니다.
-        return new ResponseEntity<>(jwt,httpHeaders, HttpStatus.OK);
+        return ResponseEntity.ok().header(JwtTokenProvider.HEADER, jwt)
+                .body(ApiUtils.success(null));
     }
 }
 
