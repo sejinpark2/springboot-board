@@ -82,6 +82,11 @@ public class Board {
         this.contents = boardDTO.getContents();
         this.updateTime = boardDTO.getUpdateTime();
     }
+
+    public void updateFromUser(User user){
+        this.user = user;
+    }
+
 }
 
 

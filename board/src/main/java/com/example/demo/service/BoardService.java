@@ -6,6 +6,7 @@ import com.example.demo.DTO.BoardDTO;
 import com.example.demo.entity.Board;
 
 import com.example.demo.repository.FileRepository;
+import com.example.demo.user.User;
 import com.example.demo.user.UserRepository;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
@@ -34,14 +35,15 @@ public class BoardService {
     String filePath = "C:/Users/G/Desktop/green/Board Files/";
 
     @Transactional
-    public void save(BoardDTO dto, MultipartFile[] files) throws IOException {
+    public void save(BoardDTO dto, MultipartFile[] files, User user) throws IOException {
 
         // ** 게시글 DB에 저장 후 pk을 받아옵니다.
         Long id = boardRepository.save(dto.toEntity()).getId();
         Board board = boardRepository.findById(id).get();
+        board.updateFromUser(user);
 
 
-        // 추
+        // 추가
         if (!files[0].isEmpty()) {
             Path uploadPath = Paths.get(filePath);
 

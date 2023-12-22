@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 
+import com.example.demo.core.security.CustomUserDetails;
 import com.example.demo.entity.BoardFile;
 import com.example.demo.repository.FileRepository;
 import com.example.demo.service.BoardService;
@@ -10,7 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -86,10 +87,11 @@ public class BoardController {
 
     @PostMapping("/save")
     public String save(@ModelAttribute BoardDTO boardDTO,
-                       @RequestParam MultipartFile[] files) throws IOException {
+                       @RequestParam MultipartFile[] files,
+                       @AuthenticationPrincipal CustomUserDetails customUserDetails) throws IOException {
 
         boardDTO.setCreateTime(LocalDateTime.now());
-        boardService.save(boardDTO, files);
+        boardService.save(boardDTO, files, customUserDetails.getUser());
 
         return "redirect:/board/";
     }
